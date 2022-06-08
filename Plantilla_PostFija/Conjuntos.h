@@ -18,9 +18,9 @@ public:
 	~Conjuntos();
 
 	Operando* operator+(Operando&) override;
-	Operando operator-(Operando&) override;
-	Operando operator*(Operando&) override;
-	Operando operator/(Operando&) override;
+	Operando* operator-(Operando&) override;
+	Operando* operator*(Operando&) override;
+	Operando* operator/(Operando&) override;
 	string toString() override;
 	set<int> val;
 };
@@ -41,45 +41,41 @@ Conjuntos::~Conjuntos(){
 inline Operando* Conjuntos::operator+(Operando& operando)
 {
 	Conjuntos& conjuntos = static_cast<Conjuntos&>(operando);
-	Conjuntos respuesta{};
-	set_union(begin(this->val), end(this->val), begin(conjuntos.val), end(conjuntos.val), inserter(respuesta.val, end(respuesta.val)));
-	Operando* oper = &respuesta;
-	return oper;
+	Conjuntos* conjuntosTemp = new Conjuntos();
+	set_union(begin(this->val), end(this->val), begin(conjuntos.val), end(conjuntos.val), inserter(conjuntosTemp->val, end(conjuntosTemp->val)));
+	return conjuntosTemp;
 }
 
-inline Operando Conjuntos::operator-(Operando& operando)
+inline Operando* Conjuntos::operator-(Operando& operando)
 {
 	Conjuntos& conjuntos = static_cast<Conjuntos&>(operando);
-	Conjuntos respuesta{};
-	set_difference(begin(this->val), end(this->val), begin(conjuntos.val), end(conjuntos.val), inserter(respuesta.val, end(respuesta.val)));
-	Operando oper = respuesta;
-	return oper;
+	Conjuntos* conjuntosTemp = new Conjuntos(conjuntos.val);
+	set_difference(begin(this->val), end(this->val), begin(conjuntos.val), end(conjuntos.val), inserter(conjuntosTemp->val, end(conjuntosTemp->val)));
+	return conjuntosTemp;
 }
 
-inline Operando Conjuntos::operator*(Operando& operando)
+inline Operando* Conjuntos::operator*(Operando& operando)
 {	
 	Conjuntos& conjuntos = static_cast<Conjuntos&>(operando);
-	Conjuntos respuesta{};
-	set_intersection(begin(this->val), end(this->val), begin(conjuntos.val), end(conjuntos.val), inserter(respuesta.val, end(respuesta.val)));
-	Operando oper = respuesta;
-	return oper;
+	Conjuntos* conjuntosTemp = new Conjuntos(conjuntos.val);
+	set_intersection(begin(this->val), end(this->val), begin(conjuntos.val), end(conjuntos.val), inserter(conjuntosTemp->val, end(conjuntosTemp->val)));
+	return conjuntosTemp;
 }
 
-inline Operando Conjuntos::operator/(Operando& operando)
+inline Operando* Conjuntos::operator/(Operando& operando)
 {
 	Conjuntos& conjuntos = static_cast<Conjuntos&>(operando);
-	Conjuntos respuesta{};
-	set_symmetric_difference(begin(this->val), end(this->val), begin(conjuntos.val), end(conjuntos.val), inserter(respuesta.val, end(respuesta.val)));
-	Operando oper = respuesta;
-	return oper;
+	Conjuntos* conjuntosTemp = new Conjuntos(conjuntos.val);
+	set_symmetric_difference(begin(this->val), end(this->val), begin(conjuntos.val), end(conjuntos.val), inserter(conjuntosTemp->val, end(conjuntosTemp->val)));
+	return conjuntosTemp;
 }
 
 inline string Conjuntos::toString()
 {
 	stringstream ss;
 	ss << "Tipo: Conjunto \nValor: ";
-	for(int i = 0; i < this->val.size(); i++){
-		ss << *this->val.find(i) << " ";
+	for (int it : this->val) {
+		ss << it << ", ";
 	}
 	return ss.str();
 }
