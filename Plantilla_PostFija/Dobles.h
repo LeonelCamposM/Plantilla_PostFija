@@ -7,58 +7,58 @@
 #include "Operando.h"
 using namespace std;
 
-class Dobles : public Operando{
+class Dobles : public Operando {
 public:
 
 	Dobles();
 	Dobles(double);
-	~Dobles() {};
+	~Dobles();
 
-	Dobles operator+(Dobles) override;
-	Dobles operator-(Dobles) override;
-	Dobles operator*(Dobles) override;
-	Dobles operator/(Dobles) override;
+	Operando operator+(Operando&) override;
+	Operando operator-(Operando&) override;
+	Operando operator*(Operando&) override;
+	Operando operator/(Operando&) override;
 	string toString() override;
 	double valor;
-}
+};
 
-inline Dobles::Dobles(){
+Dobles::Dobles(){
 	valor = 0.0;
 }
 
-inline Dobles::Dobles(double val){
+Dobles::Dobles(double val){
 	valor = val;
 }
 
-inline Dobles::~Dobles() {
+Dobles::~Dobles() {
 
 }
 
-inline Dobles Dobles::operator+(Dobles doble)
+inline Operando Dobles::operator+(Operando& doble)
 {
-	Dobles operando();
-	operando.valor = this->valor + doble.valor;
+	Dobles& operando = static_cast<Dobles&>(doble);
+	operando.valor += this->valor;
 	return operando;
 }
 
-inline Dobles Dobles::operator-(Dobles doble)
+inline Operando Dobles::operator-(Operando& doble)
 {
-	Dobles operando();
-	operando.valor = this->valor - doble.valor;
+	Dobles& operando = static_cast<Dobles&>(doble);
+	operando.valor -= this->valor;
 	return operando;
 }
 
-inline Dobles Dobles::operator*(Dobles doble)
+inline Operando Dobles::operator*(Operando& doble)
 {
-	Dobles operando();
-	operando.valor = this->valor * doble.valor;
+	Dobles& operando = static_cast<Dobles&>(doble);
+	operando.valor *= this->valor;
 	return operando;
 }
 
-inline Dobles Dobles::operator/(Dobles doble)
+inline Operando Dobles::operator/(Operando& doble)
 {
-	Dobles operando();
-	operando.valor = this->valor / doble.valor;
+	Dobles& operando = static_cast<Dobles&>(doble);
+	operando.valor /= this->valor;
 	return operando;
 }
 

@@ -5,56 +5,23 @@
 
 using namespace std;
 
-class Operando{
-	
+class Operando
+{
+
 public:
 
-	Operando();
-	~Operando();
+	Operando() {};
+	~Operando() {};
 
-	virtual Operando operator+();
-	virtual Operando operator-();
-	virtual Operando operator*();
-	virtual Operando operator/();
-	virtual string toString();
+	virtual Operando operator+(Operando&) { return Operando(); };
+	virtual Operando operator-(Operando&) { return Operando(); };
+	virtual Operando operator*(Operando&) { return Operando(); };
+	virtual Operando operator/(Operando&) { return Operando(); };
+	virtual string toString() { return ""; };
 	vector<Operando> metodoPlantilla(stringstream);
+};
 
-}
-
-Operando::Operando(){
-
-}
-
-Operando::~Operando() {
-
-}
-
-inline Operando Operando::operator+()
+inline vector<Operando> Operando::metodoPlantilla(stringstream ss)
 {
-	return Operando();
-}
-
-inline Operando Operando::operator-()
-{
-	return Operando();
-}
-
-inline Operando Operando::operator*()
-{
-	return Operando();
-}
-
-inline Operando Operando::operator/()
-{
-	return Operando();
-}
-
-inline vector<Operando> Operando::metodoPlantilla()
-{
-	return  vector<Operando>();
-}
-
-inline string Operando::toString()
-{
-	return "";
+	return vector<Operando>();
 }

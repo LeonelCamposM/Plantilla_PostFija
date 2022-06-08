@@ -11,62 +11,66 @@ using namespace std;
 
 class Conjuntos : public Operando
 {
-	
+
 public:
 	Conjuntos();
 	Conjuntos(set<int>&);
 	~Conjuntos();
 
-	Conjuntos operator+(Conjuntos) override;
-	Conjuntos operator-(Conjuntos) override;
-	Conjuntos operator*(Conjuntos) override;
-	Conjuntos operator/(Conjuntos) override;
+	Operando operator+(Operando&) override;
+	Operando operator-(Operando&) override;
+	Operando operator*(Operando&) override;
+	Operando operator/(Operando&) override;
 	string toString() override;
 	set<int> val;
-}
+};
 
-Conjuntos::Conjuntos(){
-
-}
-
-Conjuntos::Conjuntos(set<int>& conjunto){
-	val = conjunto;
-}
-
-Conjuntos::~Conjuntos() {
-
-}
-
-inline Conjuntos Conjuntos::operator+(Conjuntos)
+Conjuntos::Conjuntos()
 {
-	return Conjuntos();
 }
 
-inline Conjuntos Conjuntos::operator+(Conjuntos operando)
+Conjuntos::Conjuntos(set<int>& value)
 {
-	Conjuntos oper();
-	set_union(this->val.begin(), this->val.end(), operando.val.begin(), operando.val.end(), oper.val.begin());
+	val = value;
+}
+
+Conjuntos::~Conjuntos(){
+
+}
+
+inline Operando Conjuntos::operator+(Operando& operando)
+{
+	Conjuntos& conjuntos = static_cast<Conjuntos&>(operando);
+	Conjuntos respuesta{};
+	set_union(begin(this->val), end(this->val), begin(conjuntos.val), end(conjuntos.val), inserter(respuesta.val, end(respuesta.val)));
+	Operando oper = respuesta;
 	return oper;
 }
 
-inline Conjuntos Conjuntos::operator-(Conjuntos operando)
+inline Operando Conjuntos::operator-(Operando& operando)
 {
-	Conjuntos oper();
-	set_difference(this->val.begin(), this->val.end(), operando.val.begin(), operando.val.end(), oper.val.begin());
+	Conjuntos& conjuntos = static_cast<Conjuntos&>(operando);
+	Conjuntos respuesta{};
+	set_difference(begin(this->val), end(this->val), begin(conjuntos.val), end(conjuntos.val), inserter(respuesta.val, end(respuesta.val)));
+	Operando oper = respuesta;
 	return oper;
 }
 
-inline Conjuntos Conjuntos::operator*(Conjuntos operando)
+inline Operando Conjuntos::operator*(Operando& operando)
 {	
-	Conjuntos oper();
-	set_intersection(this->val.begin(), this->val.end(), operando.val.begin(), operando.val.end(), oper.val.begin());
+	Conjuntos& conjuntos = static_cast<Conjuntos&>(operando);
+	Conjuntos respuesta{};
+	set_intersection(begin(this->val), end(this->val), begin(conjuntos.val), end(conjuntos.val), inserter(respuesta.val, end(respuesta.val)));
+	Operando oper = respuesta;
 	return oper;
 }
 
-inline Conjuntos Conjuntos::operator/(Conjuntos operando)
+inline Operando Conjuntos::operator/(Operando& operando)
 {
-	Conjuntos oper();
-	set_symmetric_difference(this->val.begin(), this->val.end(), operando.val.begin(), operando.val.end(), oper.val.begin());
+	Conjuntos& conjuntos = static_cast<Conjuntos&>(operando);
+	Conjuntos respuesta{};
+	set_symmetric_difference(begin(this->val), end(this->val), begin(conjuntos.val), end(conjuntos.val), inserter(respuesta.val, end(respuesta.val)));
+	Operando oper = respuesta;
 	return oper;
 }
 

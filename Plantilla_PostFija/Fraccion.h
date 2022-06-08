@@ -8,69 +8,68 @@ using namespace std;
 
 class Fraccion : public Operando
 {
-	
-public:
 
-	Fraccion() {};
-	~Fraccion() {};
-	Fraccion operator+(Fraccion) override;
-	Fraccion operator-(Fraccion) override;
-	Fraccion operator*(Fraccion) override;
-	Fraccion operator/(Fraccion) override;
+public:
+	Fraccion();
+	~Fraccion();
+	Operando operator+(Operando&) override;
+	Operando operator-(Operando&) override;
+	Operando operator*(Operando&) override;
+	Operando operator/(Operando&) override;
 	string toString() override;
 	int numerador;
 	int denominador;
-}
+};
 
 
-inline Fraccion::Fraccion(){
+Fraccion::Fraccion(){
 	numerador = 0;
 	denominador = 0;
 }
 
-inline Fraccion::~Fraccion() {
+Fraccion::~Fraccion() {
 
 }
 
-inline Fraccion Fraccion::operator+(Fraccion fraccion)
+inline Operando Fraccion::operator+(Operando& fraccion)
 {
-	Fraccion operando();
-	if (this->denominador == fraccion.denominador) {
-		operando.numerador = this->numerador + fraccion.numerador;
-		operando.denominador = fraccion.denominador;
+	Fraccion& operando = static_cast<Fraccion&>(fraccion);
+	if (this->denominador == operando.denominador) {
+		operando.numerador = this->numerador + operando.numerador;
+		operando.denominador = operando.denominador;
 	} else {
-		operando.numerador = this->numerador * fraccion.denominador + this->denominador * fraccion.numerador;
-		operando.denominador = this->denominador * fraccion.denominador;
+		operando.numerador = this->numerador * operando.denominador + this->denominador * operando.numerador;
+		operando.denominador = this->denominador * operando.denominador;
 	}
 	return operando;
 }
 
-inline Fraccion Fraccion::operator-(Fraccion fraccion)
+inline Operando Fraccion::operator-(Operando& fraccion)
 {
-	Fraccion operando();
-	if (this.denominador == fraccion.denominador) {
-		operando.numerador = this->numerador - fraccion.numerador;
-		operando.denominador = fraccion.denominador;
+	Fraccion& operando = static_cast<Fraccion&>(fraccion);
+	if (this->denominador == operando.denominador) {
+		operando.numerador = this->numerador - operando.numerador;
+		operando.denominador = operando.denominador;
 	} else {
-		operando.numerador = this->numerador * fraccion.denominador - this->denominador * fraccion.numerador;
-		operando.denominador = this->denominador * fraccion.denominador;
+		operando.numerador = this->numerador * operando.denominador - this->denominador * operando.numerador;
+		operando.denominador = this->denominador * operando.denominador;
 	}
 	return operando;
 }
 
-inline Fraccion Fraccion::operator*(Fraccion fraccion)
+inline Operando Fraccion::operator*(Operando& fraccion)
 {
-	Fraccion operando();
-	operando.numerador = this->numerador * fraccion.numerador;
-	operando.denominador = this->denominador * fraccion.deminador;
+	Fraccion& operando = static_cast<Fraccion&>(fraccion);
+	operando.numerador = this->numerador * operando.numerador;
+	operando.denominador = this->denominador * operando.denominador;
 	return operando;
 }
 
-inline Fraccion Fraccion::operator/(Fraccion fraccion)
+inline Operando Fraccion::operator/(Operando& fraccion)
 {
-	Fraccion operando();
-	operando.numerador = this->numerador * fraccion.numerador;
-	operando.denominador = this->denominador * fraccion.denominador;
+	Fraccion& operando = static_cast<Fraccion&>(fraccion);
+	operando.numerador = this->numerador * operando.numerador;
+	operando.denominador = this->denominador * operando.denominador;
 	return operando;
 }
 
