@@ -12,6 +12,10 @@ bool EsOperando(char elemento);
 
 int main()
 {
-	cout << "Hello CMake." << endl;
+	Dobles doble1{ 3.14 };
+	Dobles doble2{ 3.14 };
+	Operando* respuesta = doble1 + doble2;
+	
+	cout << respuesta->toString() << endl;
 	return 0;
 }

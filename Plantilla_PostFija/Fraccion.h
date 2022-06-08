@@ -12,7 +12,7 @@ class Fraccion : public Operando
 public:
 	Fraccion();
 	~Fraccion();
-	Operando operator+(Operando&) override;
+	Operando* operator+(Operando&) override;
 	Operando operator-(Operando&) override;
 	Operando operator*(Operando&) override;
 	Operando operator/(Operando&) override;
@@ -31,7 +31,7 @@ Fraccion::~Fraccion() {
 
 }
 
-inline Operando Fraccion::operator+(Operando& fraccion)
+inline Operando* Fraccion::operator+(Operando& fraccion)
 {
 	Fraccion& operando = static_cast<Fraccion&>(fraccion);
 	if (this->denominador == operando.denominador) {
@@ -41,7 +41,9 @@ inline Operando Fraccion::operator+(Operando& fraccion)
 		operando.numerador = this->numerador * operando.denominador + this->denominador * operando.numerador;
 		operando.denominador = this->denominador * operando.denominador;
 	}
-	return operando;
+
+	Operando* retorno = &operando;
+	return retorno;
 }
 
 inline Operando Fraccion::operator-(Operando& fraccion)

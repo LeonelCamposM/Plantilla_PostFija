@@ -14,7 +14,7 @@ public:
 	Dobles(double);
 	~Dobles();
 
-	Operando operator+(Operando&) override;
+	Operando* operator+(Operando&) override;
 	Operando operator-(Operando&) override;
 	Operando operator*(Operando&) override;
 	Operando operator/(Operando&) override;
@@ -34,11 +34,12 @@ Dobles::~Dobles() {
 
 }
 
-inline Operando Dobles::operator+(Operando& doble)
+inline Operando* Dobles::operator+(Operando& doble)
 {
 	Dobles& operando = static_cast<Dobles&>(doble);
 	operando.valor += this->valor;
-	return operando;
+	Operando* oper = &operando;
+	return oper;
 }
 
 inline Operando Dobles::operator-(Operando& doble)

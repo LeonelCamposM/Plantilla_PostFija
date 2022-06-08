@@ -17,7 +17,7 @@ public:
 	Conjuntos(set<int>&);
 	~Conjuntos();
 
-	Operando operator+(Operando&) override;
+	Operando* operator+(Operando&) override;
 	Operando operator-(Operando&) override;
 	Operando operator*(Operando&) override;
 	Operando operator/(Operando&) override;
@@ -38,12 +38,12 @@ Conjuntos::~Conjuntos(){
 
 }
 
-inline Operando Conjuntos::operator+(Operando& operando)
+inline Operando* Conjuntos::operator+(Operando& operando)
 {
 	Conjuntos& conjuntos = static_cast<Conjuntos&>(operando);
 	Conjuntos respuesta{};
 	set_union(begin(this->val), end(this->val), begin(conjuntos.val), end(conjuntos.val), inserter(respuesta.val, end(respuesta.val)));
-	Operando oper = respuesta;
+	Operando* oper = &respuesta;
 	return oper;
 }
 
