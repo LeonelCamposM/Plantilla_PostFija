@@ -73,7 +73,7 @@ inline Operando* Conjuntos::operator/(Operando& operando)
 inline string Conjuntos::toString()
 {
 	stringstream ss;
-	ss << "Tipo: Conjunto \nValor: ";
+	ss << "Tipo: Conjunto\nValor: ";
 	for (int it : this->val) {
 		ss << it << ", ";
 	}

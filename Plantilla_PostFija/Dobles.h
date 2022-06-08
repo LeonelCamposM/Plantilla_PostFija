@@ -68,5 +68,5 @@ inline Operando* Dobles::operator/(Operando& doble)
 
 inline string Dobles::toString()
 {
-	return "Tipo: Double \nValor: " + to_string(this->valor);
+	return "Tipo: Double\nValor: " + to_string(this->valor);
 }
