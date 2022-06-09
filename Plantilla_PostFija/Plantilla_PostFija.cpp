@@ -14,9 +14,6 @@ bool esOperando(string elemento);
 string resolver(string expr);
 vector<string> tokenizar(string expr, char delimitador);
 int averiguarTipoDato(string token);
-Operando* operar(string operador, Operando* a, Operando* b);
-
-
 
 int main()
 {
@@ -110,26 +107,11 @@ string resolver(string expr) {
 			pila.pop();
 			Operando* a = pila.top();
 			pila.pop();
-			Operando* res = operar(elemento, a,b);
+			Operando* res = a->operar(elemento, a, b);
 			pila.push(res);
 		}
 	}
 	return pila.top()->toString();
-}
-
-Operando* operar(string operador, Operando* a, Operando* b) {
-	if (operador == "*") {
-		return (*a) * (*b);
-	}
-	if (operador == "+") {
-		return (*a) + (*b);
-	}
-	if (operador == "-") {
-		return (*a) - (*b);
-	}
-	if (operador == "/") {
-		return (*a) / (*b);
-	}
 }
 
 bool esOperando(string elemento) {

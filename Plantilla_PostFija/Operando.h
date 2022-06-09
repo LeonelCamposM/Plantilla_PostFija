@@ -18,10 +18,21 @@ public:
 	virtual Operando* operator*(Operando&) { return new Operando(); };
 	virtual Operando* operator/(Operando&) { return new Operando(); };
 	virtual string toString() { return ""; };
-	vector<Operando> metodoPlantilla(stringstream);
+	Operando* operar(string operador, Operando* a, Operando* b);
 };
 
-inline vector<Operando> Operando::metodoPlantilla(stringstream ss)
+inline Operando* Operando::operar(string operador, Operando* a, Operando* b)
 {
-	return vector<Operando>();
+	if (operador == "*") {
+		return (*a) * (*b);
+	}
+	if (operador == "+") {
+		return (*a) + (*b);
+	}
+	if (operador == "-") {
+		return (*a) - (*b);
+	}
+	if (operador == "/") {
+		return (*a) / (*b);
+	}
 }
