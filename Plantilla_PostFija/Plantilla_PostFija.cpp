@@ -1,81 +1,142 @@
 ﻿// Plantilla_PostFija.cpp : Defines the entry point for the application.
 #include <iostream>
+#include <string>
 #include <vector>
+#include <stack>
 #include "Fraccion.h"
 #include "Dobles.h"
 #include "Conjuntos.h"
 #include "Operando.h"
-#include <stack>
 
 using namespace std;
-float Operar(float a, float b, char operando);
-bool EsOperando(char elemento);
-int esOperando(char elemento);
-double resolver(string expr);
-double operar(char operador, double a, double b);
 
-stack<double> pila;
+bool esOperando(string elemento);
+string resolver(string expr);
+vector<string> tokenizar(string expr, char delimitador);
+int averiguarTipoDato(string token);
+Operando* operar(string operador, Operando* a, Operando* b);
+
+
 
 int main()
 {
-	Dobles doble1{ 3.14 };
-	Dobles doble2{ 3.14 };
-	Operando* respuesta = doble1 + doble2;
-	cout << respuesta->toString() << endl;
+	Dobles doble{3.14};
+	cout << doble.toString() << endl;
 
-	Fraccion fraccion1{ 3, 4 };
-	Fraccion fraccion2{ 3, 4 };
-	Operando* respuesta2 = fraccion1 + fraccion2;
-	cout << respuesta2->toString() << endl;
+	Fraccion fraccion{3, 4};
+	cout << fraccion.toString() << endl;
 
-	set<int> ny = {1, 2, 3};
-	set<int> sofi = { 4, 5, 6 };
-	Conjuntos conjunto1{ ny };
-	Conjuntos conjunto2{ sofi };
-	Operando* respuesta3 = conjunto1 + conjunto2;
-	cout << respuesta3->toString() << endl;
+	set<int> set1 = {1, 2, 3};
+	Conjuntos conjunto{ set1 };
+	cout << conjunto.toString() << endl;
 
-	cout << resolver("58*6+") << endl;
+	cout << "---------------------" << endl << endl;
+	cout << resolver("5.0,9.0,+,6.0,*,5.0,2.0,/,-") << endl;
+	cout << "---------------------" << endl << endl;
+	cout << resolver("2/4,2/4,*,13/4,+,1/2,/,2/4,-") << endl;
+	cout << "---------------------" << endl << endl;
+	cout << resolver("{1 2 3 4},{5 6 7 8},*,{9 10 11},+,{9 12 13},/,{10 11},-") << endl;
 	return 0;
 }
 
-double resolver(string expr) {
-	for (int i = 0; i < expr.size(); i++) {
-		char elemento = expr[i];
+vector<string> tokenizar(string expr, char delimitador) {
+	vector <string> tokens;
+	stringstream ss(expr);
+	string intermediate;
+	while (getline(ss, intermediate, delimitador))
+	{
+		tokens.push_back(intermediate);
+	}
+	return tokens;
+}
+
+int averiguarTipoDato(string token) { 
+	size_t found = token.find("/");
+	if (found != string::npos) {
+		return 0;
+	}
+	size_t found2 = token.find("{");
+	if (found2 != string::npos) {
+		return 1;
+	}
+	size_t found3 = token.find(".");
+	if (found3 != string::npos) {
+		return 2;
+	}
+}
+
+string resolver(string expr) {
+	cout << expr << endl;
+	vector <string> tokens = tokenizar(expr, ',');
+	int tipo = averiguarTipoDato(tokens[0]);
+	
+	stack<Operando*> pila;
+	
+	for (int i = 0; i < tokens.size(); i++) {
+		string elemento = tokens[i];
 		if(esOperando(elemento)) {
-			pila.push(elemento - '0');
+			switch (tipo)
+			{
+			case 0: {
+				size_t pos = elemento.find("/");
+				string numerador = elemento.substr(0, pos);
+				string denominador = elemento.substr(pos+1);
+				Fraccion* elementoTemp = new Fraccion(stoi(numerador), stoi(denominador));
+				pila.push(elementoTemp);
+			}
+				  break;
+			case 1: {
+				vector <string> conjunto = tokenizar(elemento, ' ');
+				set<int> conjuntoElementos;
+				for (int i = 0; i < conjunto.size(); i++) {
+					if (i== 0)
+						conjunto[i].replace(0, 1, " ");
+					if (i == conjunto.size())
+						conjunto[i].replace(1, 2, " ");
+					conjuntoElementos.insert(stoi(conjunto[i]));
+				}
+				Conjuntos* elementoTemp = new Conjuntos(conjuntoElementos);
+				pila.push(elementoTemp);
+			}
+				  break;
+			case 2: {
+				Dobles* elementoTemp =  new Dobles(stod(elemento));
+				pila.push(elementoTemp);
+			}
+				  break;
+			}
 		}else {
-			double b = pila.top();
+			Operando* b = pila.top();
 			pila.pop();
-			double a = pila.top();
+			Operando* a = pila.top();
 			pila.pop();
-			double res = operar(elemento, a,b);
+			Operando* res = operar(elemento, a,b);
 			pila.push(res);
 		}
 	}
-	return pila.top();
+	return pila.top()->toString();
 }
 
-double operar(char operador, double a, double b) {
-	if (operador == '*') {
-		return a*b;
+Operando* operar(string operador, Operando* a, Operando* b) {
+	if (operador == "*") {
+		return (*a) * (*b);
 	}
-	if (operador == '+') {
-		return a + b;
+	if (operador == "+") {
+		return (*a) + (*b);
 	}
-	if (operador == '-') {
-		return a - b;
+	if (operador == "-") {
+		return (*a) - (*b);
 	}
-	if (operador == '/') {
-		return a / b;
+	if (operador == "/") {
+		return (*a) / (*b);
 	}
 }
 
-int esOperando(char elemento) {
-	if (elemento >= '0' && elemento <= '9') {
-		return 1;
+bool esOperando(string elemento) {
+	if (elemento == "+" || elemento == "-" || elemento == "*" || elemento == "/") {
+		return false;
 	}
 	else {
-		return 0;
+		return true;
 	}
 }

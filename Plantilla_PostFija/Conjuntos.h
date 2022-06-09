@@ -49,7 +49,7 @@ inline Operando* Conjuntos::operator+(Operando& operando)
 inline Operando* Conjuntos::operator-(Operando& operando)
 {
 	Conjuntos& conjuntos = static_cast<Conjuntos&>(operando);
-	Conjuntos* conjuntosTemp = new Conjuntos(conjuntos.val);
+	Conjuntos* conjuntosTemp = new Conjuntos();
 	set_difference(begin(this->val), end(this->val), begin(conjuntos.val), end(conjuntos.val), inserter(conjuntosTemp->val, end(conjuntosTemp->val)));
 	return conjuntosTemp;
 }
@@ -57,7 +57,7 @@ inline Operando* Conjuntos::operator-(Operando& operando)
 inline Operando* Conjuntos::operator*(Operando& operando)
 {	
 	Conjuntos& conjuntos = static_cast<Conjuntos&>(operando);
-	Conjuntos* conjuntosTemp = new Conjuntos(conjuntos.val);
+	Conjuntos* conjuntosTemp = new Conjuntos();
 	set_intersection(begin(this->val), end(this->val), begin(conjuntos.val), end(conjuntos.val), inserter(conjuntosTemp->val, end(conjuntosTemp->val)));
 	return conjuntosTemp;
 }
@@ -65,7 +65,7 @@ inline Operando* Conjuntos::operator*(Operando& operando)
 inline Operando* Conjuntos::operator/(Operando& operando)
 {
 	Conjuntos& conjuntos = static_cast<Conjuntos&>(operando);
-	Conjuntos* conjuntosTemp = new Conjuntos(conjuntos.val);
+	Conjuntos* conjuntosTemp = new Conjuntos();
 	set_symmetric_difference(begin(this->val), end(this->val), begin(conjuntos.val), end(conjuntos.val), inserter(conjuntosTemp->val, end(conjuntosTemp->val)));
 	return conjuntosTemp;
 }

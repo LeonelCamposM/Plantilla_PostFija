@@ -46,7 +46,7 @@ inline Operando* Dobles::operator-(Operando& doble)
 {
 	Dobles& operando = static_cast<Dobles&>(doble);
 	Dobles* operandoTemp = new Dobles(operando.valor);
-	operandoTemp->valor -= this->valor;
+	operandoTemp->valor = this->valor - operandoTemp->valor;
 	return operandoTemp;
 }
 
@@ -62,7 +62,7 @@ inline Operando* Dobles::operator/(Operando& doble)
 {
 	Dobles& operando = static_cast<Dobles&>(doble);
 	Dobles* operandoTemp = new Dobles(operando.valor);
-	operandoTemp->valor /= this->valor;
+	operandoTemp->valor = this->valor / operandoTemp->valor;
 	return operandoTemp;
 }
 
