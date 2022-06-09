@@ -13,10 +13,10 @@ public:
 	Operando() {};
 	~Operando() {};
 
-	virtual Operando operator+(Operando&) { return Operando(); };
-	virtual Operando operator-(Operando&) { return Operando(); };
-	virtual Operando operator*(Operando&) { return Operando(); };
-	virtual Operando operator/(Operando&) { return Operando(); };
+	virtual Operando* operator+(Operando&) { return new Operando(); };
+	virtual Operando* operator-(Operando&) { return new Operando(); };
+	virtual Operando* operator*(Operando&) { return new Operando(); };
+	virtual Operando* operator/(Operando&) { return new Operando(); };
 	virtual string toString() { return ""; };
 	vector<Operando> metodoPlantilla(stringstream);
 };

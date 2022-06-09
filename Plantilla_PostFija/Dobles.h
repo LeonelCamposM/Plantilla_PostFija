@@ -14,10 +14,10 @@ public:
 	Dobles(double);
 	~Dobles();
 
-	Operando operator+(Operando&) override;
-	Operando operator-(Operando&) override;
-	Operando operator*(Operando&) override;
-	Operando operator/(Operando&) override;
+	Operando* operator+(Operando&) override;
+	Operando* operator-(Operando&) override;
+	Operando* operator*(Operando&) override;
+	Operando* operator/(Operando&) override;
 	string toString() override;
 	double valor;
 };
@@ -34,35 +34,39 @@ Dobles::~Dobles() {
 
 }
 
-inline Operando Dobles::operator+(Operando& doble)
+inline Operando* Dobles::operator+(Operando& doble)
 {
 	Dobles& operando = static_cast<Dobles&>(doble);
-	operando.valor += this->valor;
-	return operando;
+	Dobles* operandoTemp = new Dobles(operando.valor);
+	operandoTemp->valor += this->valor;
+	return operandoTemp;
 }
 
-inline Operando Dobles::operator-(Operando& doble)
+inline Operando* Dobles::operator-(Operando& doble)
 {
 	Dobles& operando = static_cast<Dobles&>(doble);
-	operando.valor -= this->valor;
-	return operando;
+	Dobles* operandoTemp = new Dobles(operando.valor);
+	operandoTemp->valor -= this->valor;
+	return operandoTemp;
 }
 
-inline Operando Dobles::operator*(Operando& doble)
+inline Operando* Dobles::operator*(Operando& doble)
 {
 	Dobles& operando = static_cast<Dobles&>(doble);
-	operando.valor *= this->valor;
-	return operando;
+	Dobles* operandoTemp = new Dobles(operando.valor);
+	operandoTemp->valor *= this->valor;
+	return operandoTemp;
 }
 
-inline Operando Dobles::operator/(Operando& doble)
+inline Operando* Dobles::operator/(Operando& doble)
 {
 	Dobles& operando = static_cast<Dobles&>(doble);
-	operando.valor /= this->valor;
-	return operando;
+	Dobles* operandoTemp = new Dobles(operando.valor);
+	operandoTemp->valor /= this->valor;
+	return operandoTemp;
 }
 
 inline string Dobles::toString()
 {
-	return "Tipo: Double \nValor: " + to_string(this->valor);
+	return "Tipo: Double\nValor: " + to_string(this->valor);
 }
